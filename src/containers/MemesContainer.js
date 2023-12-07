@@ -8,11 +8,13 @@ const MemesContainer = () => {
 
     const [allMemes, setAllMemes] = useState([])
     const [myMemes, setMyMemes] = useState([])
+    const [findMeme, setFindMeme] = useState(null)
 
     const fetchAllMemes = async () => {
         const response = await fetch("https://api.imgflip.com/get_memes");
         const data = await response.json();
         setAllMemes(data.data.memes);
+        setFindMeme(data.data.memes[0]);
     }
 
     const postMeme = async (newMeme, setter) => {
@@ -31,7 +33,7 @@ const MemesContainer = () => {
 
         const updatedMyMemes = [...myMemes,updatedMeme]
         setMyMemes(updatedMyMemes)
-        setter(generatedMeme)
+        setter(updatedMeme)
     }
 
     useEffect(() => {
@@ -45,15 +47,21 @@ const MemesContainer = () => {
             children: [
                 {
                     path: "/",
-                    element: <MemesList memesList={allMemes}/>
+                    element: <MemesList memesList={allMemes} setFindMeme={setFindMeme}/>,
+                    // children: [
+                    //     {
+                    //         path: "/generate-meme",
+                    //         element: <MemeForm memesList={allMemes} findMeme={allMemes[0]} postMeme = {postMeme}/>
+                    //     },
+                    // ]
                 },
                 {
                     path: "/generate-meme",
-                    element: <MemeForm memesList={allMemes} findMeme={allMemes[0]} postMeme = {postMeme}/>
+                    element: <MemeForm memesList={allMemes} findMeme={findMeme} postMeme = {postMeme}/>
                 },
                 {
                     path: "/my-memes",
-                    element: <MemesList memesList={myMemes}/>
+                    element: <MemesList memesList={myMemes} setFindMeme={setFindMeme}/>
                 }
             ]
         }

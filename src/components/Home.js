@@ -8,7 +8,6 @@ const Home = () => {
                     <li><Link to="/">Memepage</Link></li>
                     <li><Link to="/generate-meme">Meme Generator</Link></li>
                     <li><Link to="/my-memes">MyMemes</Link></li>
-                Nav Bar
                 </ul>
             </nav>
             <Outlet />

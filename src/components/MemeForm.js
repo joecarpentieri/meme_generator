@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../logo.svg"
 
 
 
@@ -15,6 +16,8 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
     })
     
     const [currentMeme, setCurrentMeme] = useState(memesList.find((meme)=>meme==findMeme))
+
+    const [imageUrl, setImageUrl] = useState("")
 
     
     const memesOptions = memesList.map((meme)=>{
@@ -36,7 +39,13 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
 
     const handleFormSubmit = (event)=>{
         event.preventDefault()
+        setImageUrl("")
         postMeme(stateMeme, setCurrentMeme)
+        setStateMeme({template_id:currentMeme.id,
+            username:"",
+            password:"",
+            text0:"",
+            text1:""})
         // set
     }
 
@@ -45,19 +54,28 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
         const updatedMeme = memesList.find((meme)=>meme.id==stateMeme.template_id)
         console.log(updatedMeme)
         if (updatedMeme){
-            setCurrentMeme(updatedMeme)
+            setImageUrl(updatedMeme.url)
         }
 
         console.log(updatedMeme)
 
     },[stateMeme.template_id])
 
+    useEffect(()=>{
+
+        // const updatedMeme = memesList.find((meme)=>meme.id==stateMeme.template_id)
+        // if (updatedMeme){
+            setImageUrl(currentMeme.url)
+        // }
+
+    },[currentMeme.url])
+
     // console.log(currentMeme)
     
 
     return ( 
         <section id = "form-section">
-            <img src={currentMeme.url} alt="meme"></img>
+            <img id={imageUrl ? "" : "rotating"} src={imageUrl ? imageUrl : logo} alt="Meme loading..."></img>
             <form id="form" onSubmit={handleFormSubmit} >
                 <h1>Generate Meme!</h1>
 
@@ -65,7 +83,7 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
                 <select 
                 id= "template_id"
                 name="template_id"
-                defaultValue={findMeme.name}
+                defaultValue={findMeme.id}
                 onChange={handleChange}>
                     {memesOptions}
                 </select>
