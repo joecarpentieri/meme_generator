@@ -14,7 +14,8 @@ const MemesContainer = () => {
         const data = await response.json();
         setAllMemes(data.data.memes);
     }
-    const postMeme = async (newMeme) => {
+
+    const postMeme = async (newMeme, setter) => {
         const response = await fetch('https://api.imgflip.com/caption_image', {
             method: "POST",
             headers: {"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
@@ -24,13 +25,13 @@ const MemesContainer = () => {
         const responseMeme = await response.json();
         console.log(responseMeme)
 
-        const generatedMeme = {
-            name:"new name",
-            url: responseMeme.data.url
-        }
+        const generatedMeme = allMemes.find((meme)=>meme.id==newMeme.template_id)
+        const updatedMeme = {...generatedMeme}
+        updatedMeme.url = responseMeme.data.url
 
-        const updatedMyMemes = [...myMemes,generatedMeme]
+        const updatedMyMemes = [...myMemes,updatedMeme]
         setMyMemes(updatedMyMemes)
+        setter(generatedMeme)
     }
 
     useEffect(() => {

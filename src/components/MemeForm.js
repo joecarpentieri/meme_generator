@@ -36,7 +36,7 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
 
     const handleFormSubmit = (event)=>{
         event.preventDefault()
-        postMeme(stateMeme)
+        postMeme(stateMeme, setCurrentMeme)
         // set
     }
 
