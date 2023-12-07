@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 const MemesContainer = () => {
 
-    const [allMemes, setAllMemes] = useState(null)
+    const [allMemes, setAllMemes] = useState([])
     const [myMemes, setMyMemes] = useState([])
 
     const fetchAllMemes = async () => {
@@ -32,7 +32,7 @@ const MemesContainer = () => {
                 },
                 {
                     path: "/generate-meme",
-                    element: <MemeForm/>
+                    element: <MemeForm memesList={allMemes} findMeme={allMemes[0]}/>
                 },
                 {
                     path: "/my-memes",
@@ -46,7 +46,7 @@ const MemesContainer = () => {
     return ( 
     <>
         <h1>All Memes</h1>
-        {allMemes ? <RouterProvider router={memeRoutes}/>: <p>Loading...</p>}
+        {allMemes!=[]? <RouterProvider router={memeRoutes}/>: <p>Loading...</p>}
     </>
      );
 }

@@ -1,4 +1,4 @@
-import './App.css';
+import './styles.css';
 import Home from './components/Home';
 import MemesContainer from './containers/MemesContainer';
 import MemesList from "./components/MemesList";
