@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const MemeForm = ({memesList, findMeme}) => {
+const MemeForm = ({memesList, findMeme, postMeme}) => {
 
     const [stateMeme, setStateMeme] = useState({
         template_id:findMeme.id,
@@ -34,6 +34,12 @@ const MemeForm = ({memesList, findMeme}) => {
         // console.log(stateMeme);
     }
 
+    const handleFormSubmit = (event)=>{
+        event.preventDefault()
+        postMeme(stateMeme)
+        // set
+    }
+
     useEffect(()=>{
 
         const updatedMeme = memesList.find((meme)=>meme.id==stateMeme.template_id)
@@ -52,7 +58,7 @@ const MemeForm = ({memesList, findMeme}) => {
     return ( 
         <section id = "form-section">
             <img src={currentMeme.url} alt="meme"></img>
-            <form id="form">
+            <form id="form" onSubmit={handleFormSubmit} >
                 <h1>Generate Meme!</h1>
 
                 <label htmlFor="template_id" >Choose your template!</label>
