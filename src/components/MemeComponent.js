@@ -9,7 +9,7 @@ const MemeComponent = ({meme, setFindMeme}) => {
     return ( 
     <article>
         <h4><b><Link to="/generate-meme" onClick={handleFindMeme}>{meme.name}</Link></b></h4>
-        <img src={meme.url} ></img> 
+        <Link to="/generate-meme" onClick={handleFindMeme}><img src={meme.url} ></img></Link>
     </article>
     );
     // img button/link + title on top
