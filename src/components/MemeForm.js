@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../logo.svg"
 
-
-
 const MemeForm = ({memesList, findMeme, postMeme}) => {
 
     const [stateMeme, setStateMeme] = useState({
@@ -11,8 +9,27 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
         username:"",
         password:"",
         text0:"",
-        text1:""
-        // boxes:[]
+        text1:"",
+        // boxes:[
+        //     {
+        //        "text": "One does not simply",
+        //        "x": 10,
+        //        "y": 10,
+        //        "width": 548,
+        //        "height": 100,
+        //        "color": "#ffffff",
+        //        "outline_color": "#000000"
+        //     },
+        //     {
+        //        "text": "Make custom memes on the web via imgflip API",
+        //        "x": 10,
+        //        "y": 225,
+        //        "width": 548,
+        //        "height": 100,
+        //        "color": "#ffffff",
+        //        "outline_color": "#000000"
+        //     }
+        //  ]
     })
     
     const [currentMeme, setCurrentMeme] = useState(memesList.find((meme)=>meme==findMeme))
@@ -39,6 +56,11 @@ const MemeForm = ({memesList, findMeme, postMeme}) => {
 
     const handleFormSubmit = (event)=>{
         event.preventDefault()
+
+        if (!stateMeme.username|| !stateMeme.password){
+            return alert("Either the username or password field is empty")
+        }
+
         setImageUrl("")
         postMeme(stateMeme, setCurrentMeme)
         setStateMeme({template_id:currentMeme.id,
